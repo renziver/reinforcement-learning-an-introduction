@@ -22,9 +22,6 @@ class GreedyAgent:
             _qval = [x/y if y else 0 for x,y in zip(self.q_values,self.nth_action)]
             self.ave_rewards.append(np.mean(_qval))
             print(self.nth_action)
-        
-        
-        ## Problem averaging - per step get qvalues / nth action
             
         x = [x for x in range(steps)]
         y = self.ave_rewards
