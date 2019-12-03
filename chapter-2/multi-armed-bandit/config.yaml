@@ -1,0 +1,4 @@
+evaluate:
+    k: 64
+    epsilon: 0.1
+    steps: 2000

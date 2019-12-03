@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np 
 import random
+import yaml
 
 class GreedyAgent:
     def __init__(self, k, epsilon):
@@ -21,7 +22,6 @@ class GreedyAgent:
             update_qval(self.q_values,self.nth_action, self.rewards, selected_act)
             _qval = [x/y if y else 0 for x,y in zip(self.q_values,self.nth_action)]
             self.ave_rewards.append(np.mean(_qval))
-            print(self.nth_action)
             
         x = [x for x in range(steps)]
         y = self.ave_rewards
@@ -29,12 +29,8 @@ class GreedyAgent:
         plt.plot(x, y)
         plt.xlabel('steps')
         plt.ylabel('average reward')
-        plt.legend()
         plt.title("Epsilon Greedy Multi-Armed Bandit | Number of Bandits: {} Epsilon: {}".format(self.k, self.epsilon))
-        plt.show()
-        return True
-            
-        
+        plt.show() 
 
 def select_action(epsilon, q_values, actions):
     val = np.random.randn()
@@ -56,7 +52,12 @@ def update_qval(q_values,nth_action, reward, action):
     q_values[action] = q_values[action] + ((reward[action]-q_values[action])/nth_action[action])
     return q_values
 
-    
+def eval_arguments(config):
+    with open('config.yaml', 'rb') as f:
+        conf = yaml.safe_load(f)
+    return conf['evaluate']
 
-        
-    
+if __name__ == '__main__':
+    args = eval_arguments('config.yaml')
+    agent = GreedyAgent(args['k'], args['epsilon'])
+    agent.run(args['steps'])
