@@ -1,4 +1,4 @@
 evaluate:
-    k: 64
+    k: 10
     epsilon: 0.1
-    steps: 2000
+    steps: 1000
